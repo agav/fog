@@ -1,4 +1,4 @@
-# OCL Unit: requirements
+# FOG: requirements
 
 Status: draft. The concept can change during development.
 
