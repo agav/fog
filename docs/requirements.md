@@ -36,6 +36,7 @@ The user makes the shape in these steps:
 3. On the front side, offset the outline 18 mm to the inner side.
 4. Use Push/Pull to push out the center piece.
 5. Group the geometry.
+6. In Entity Info, write the unit name in the **Instance** field of the group.
 
 The result is one group that has the shape of four connected panels: bottom, left, right and top.
 
@@ -47,10 +48,10 @@ A group is a **valid candidate** if all these conditions are true:
 | IN-2 | Its outer shape is a rectangular box (all corners are 90°). |
 | IN-3 | It has one rectangular through opening between two opposite sides. |
 | IN-4 | All four walls around the opening are 18 mm thick. |
-| IN-5 | **[Proposed]** The axis of the opening is horizontal, and the walls are vertical or horizontal. The group can turn around the model Z axis. |
-| IN-6 | **[Proposed]** The group contains only faces and edges. It has no nested groups or components. Added coplanar edges are permitted. |
-| IN-7 | **[Proposed]** The tolerance for dimensions is 0.1 mm. Dimensions are measured in model space, after the group transformation. |
-| IN-8 | **[Proposed]** The group is in the model root. Close all groups before you use the tool (same limit as ocl-joints). |
+| IN-5 | The axis of the opening is horizontal, and the walls are vertical or horizontal. The group can turn around the model Z axis. |
+| IN-6 | The group contains only faces and edges. It has no nested groups or components. Added coplanar edges are permitted. |
+| IN-7 | The tolerance for dimensions is 0.1 mm. Dimensions are measured in model space, after the group transformation. |
+| IN-8 | The group is in the model root. Close all groups before you use the tool (same limit as ocl-joints). |
 
 A shape with a blind pocket (the center piece is not pushed through) is not valid. Button 1 makes only the four panels.
 The back is a separate operation (button 3), because the back placement can be different on different units.
@@ -62,11 +63,11 @@ A later version can combine buttons.
 2. The user moves the cursor. The tool highlights a valid candidate under the cursor, the same way ocl-joints
    highlights a panel (yellow edges, 1 px). The tool does not highlight other objects.
 3. The user clicks a highlighted candidate.
-4. The plugin gets the unit name (section 3.3).
+4. The plugin reads the unit name (section 3.3). If the name is not valid, the procedure stops here.
 5. The user selects the overlap (section 3.5).
 6. The plugin makes the result (sections 3.6 to 3.9).
 
-**[Proposed]**
+Rules for the procedure:
 
 - **Esc** cancels the current step. Until step 6, the plugin does not change the model.
 - The status bar shows the instruction for the current step.
@@ -74,21 +75,19 @@ A later version can combine buttons.
 
 ### 3.3 Unit name
 
-The user gives the name `<name>`.
-
-**[Proposed]** The plugin shows an input field. The field contains the instance name of the initial group (Entity Info > Instance), if it has one.
-Thus the user can write the name in Entity Info before the operation and only push **Enter** in the field.
+The plugin reads `<name>` from the instance name of the initial group (Entity Info > Instance). The plugin does not ask the user for the name.
 
 Name rules:
 
 | ID | Rule |
 |---|---|
 | NM-1 | `<name>` is not in conflict with a name of a tag, tag folder, component definition or scene in the model. Two names are in conflict if they are the same, or if one name starts with the other name plus `-`. |
-| NM-2 | **[Proposed]** The name is not empty. Spaces at the start and at the end are removed. |
+| NM-2 | The name is not empty. Spaces at the start and at the end are removed. |
 | NM-3 | The comparison in NM-1 ignores uppercase and lowercase. |
-| NM-4 | **[Proposed]** The name does not start with `f_` or `g_`. ocl-joints and ocl-viyar use these prefixes for machining components, not for panels. |
+| NM-4 | The name does not start with `f_` or `g_`. ocl-joints and ocl-viyar use these prefixes for machining components, not for panels. |
 
-If the name is not valid, the plugin shows the reason and asks again.
+If the instance name is empty or not valid, the plugin shows an error message with the reason. The model does not change.
+The tool stays active, so the user can correct the name in Entity Info and click the group again.
 
 The reason for NM-1: all names of a unit are `<name>` or start with `<name>-`. These are the tag folder and the scene `<name>`,
 the tags `<name>-<role>` and the components `<name>-<role>-<panel>`. If NM-1 is true, no other unit can have these names.
@@ -114,8 +113,8 @@ A later button can find a tag with its name that the user added by hand after th
 The **front side** is the side with the opening that faces the user. Because the opening goes through the shape,
 two sides have an opening. The plugin selects the side with the outward normal that points most directly to the camera.
 
-**[Proposed]** The plugin finds this side when the user clicks the candidate. If the camera looks along the plane of the opening
-and the plugin cannot select a side, the plugin asks the user to turn the camera.
+The plugin finds this side when the user clicks the candidate. If the two sides face the camera equally (the camera looks along
+the plane of the opening), the plugin selects one of them. It does not ask the user.
 
 All directions in this document are as seen from the front of the unit:
 
