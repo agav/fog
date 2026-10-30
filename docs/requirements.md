@@ -5,7 +5,7 @@ Status: draft. The concept can change during development.
 Marks in this document:
 
 - **[Proposed]**: the user did not specify this item. It is a proposed default. Change it if it is not correct.
-- **[Q1]**, **[Q2]**, ...: an open question. See [Open questions](#7-open-questions).
+- **[Q2]**, ...: an open question. See [Open questions](#7-open-questions).
 
 ## 1. Purpose
 
@@ -177,10 +177,12 @@ When you look at the unit from the front, you see the front edge of each panel. 
 |---|---|---|---|---|
 | Left | Top left corner | Down | Back | Right |
 | Top | Bottom left corner | Right | Back | Up |
-| Right | Bottom left corner **[Q1]** | Up | Back | Left |
+| Right | Bottom right corner | Up | Back | Left |
 | Bottom | Bottom left corner | Right | Back | Up |
 
 The blue axis is calculated: SketchUp axes are right-handed, thus blue = red × green.
+On all panels, the material is on the positive side of the blue axis (from 0 to `t`).
+The right panel is the left panel turned 180°.
 
 Panel origins in the unit frame:
 
@@ -188,7 +190,7 @@ Panel origins in the unit frame:
 |---|---|---|
 | Left | `(0, 0, H − t)` | `(0, 0, H)` |
 | Top | `(0, 0, H − t)` | `(t, 0, H − t)` |
-| Right **[Q1]** | `(W − t, 0, t)` | `(W − t, 0, 0)` |
+| Right | `(W, 0, t)` | `(W, 0, 0)` |
 | Bottom | `(0, 0, 0)` | `(t, 0, 0)` |
 
 ### 3.8 Materials and tags of the panels
@@ -256,20 +258,7 @@ The panel definition names are new. The older projects use `<unit>-<role>` (exam
 
 ## 7. Open questions
 
-### Q1. Right panel: origin and blue axis
-
-The specified axes of the right panel are red up and green to the back. Thus blue points to the left, because
-SketchUp axes are right-handed. The specified origin is the bottom left corner. This is on the inner face of the right panel.
-The panel material is on the right of this corner, so it is on the negative side of the blue axis (from −18 to 0).
-On the other three panels, the material is on the positive side (from 0 to 18).
-
-| Option | Origin | Red, green, blue | Blue range | Effect |
-|---|---|---|---|---|
-| **1 (recommended)** | Bottom **right** corner | Up, back, left | 0 to 18 | Same as the other panels. The right panel is the left panel turned 180°. |
-| 2 | Bottom left corner, as specified | Up, back, left | −18 to 0 | Other panels are different. The plugins read the panel box correctly, but other calculations must accept negative values. |
-| 3 | Bottom left corner, as specified | Up, back, right | 0 to 18 | The axes are left-handed, so the panel is mirrored. Not recommended. |
-
-This document shows option 2 (the specified text) until the user decides.
+Q1 (right panel origin) is closed: the origin is the bottom right corner. See section 3.7.
 
 ### Q2. Blind pocket
 
