@@ -5,7 +5,7 @@ Status: draft. The concept can change during development.
 Marks in this document:
 
 - **[Proposed]**: the user did not specify this item. It is a proposed default. Change it if it is not correct.
-- **[Q2]**, ...: an open question. See [Open questions](#7-open-questions).
+- **[Q3]**, ...: an open question. See [Open questions](#7-open-questions).
 
 ## 1. Purpose
 
@@ -52,7 +52,9 @@ A group is a **valid candidate** if all these conditions are true:
 | IN-7 | **[Proposed]** The tolerance for dimensions is 0.1 mm. Dimensions are measured in model space, after the group transformation. |
 | IN-8 | **[Proposed]** The group is in the model root. Close all groups before you use the tool (same limit as ocl-joints). |
 
-A shape with a blind pocket (the center piece is not pushed through) is not valid. **[Q2]**
+A shape with a blind pocket (the center piece is not pushed through) is not valid. Button 1 makes only the four panels.
+The back is a separate operation (button 3), because the back placement can be different on different units.
+A later version can combine buttons.
 
 ### 3.2 Procedure
 
@@ -258,12 +260,10 @@ The panel definition names are new. The older projects use `<unit>-<role>` (exam
 
 ## 7. Open questions
 
-Q1 (right panel origin) is closed: the origin is the bottom right corner. See section 3.7.
+Closed questions:
 
-### Q2. Blind pocket
-
-Is a shape with a closed back (center piece not pushed through) a valid candidate? This document says no, because the
-result has four panels only.
+- Q1 (right panel origin): the origin is the bottom right corner. See section 3.7.
+- Q2 (blind pocket): not a valid candidate. See section 3.1.
 
 ### Q3. Direction of name rule NM-1
 
