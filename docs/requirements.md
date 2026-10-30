@@ -2,11 +2,6 @@
 
 Status: draft. The concept can change during development.
 
-Marks in this document:
-
-- **[Proposed]**: the user did not specify this item. It is a proposed default. Change it if it is not correct.
-- **[Q4]**: an open question. See [Open questions](#7-open-questions).
-
 ## 1. Purpose
 
 The user draws a simple shape in SketchUp. The plugin changes the shape quickly into a furniture unit and applies
@@ -156,7 +151,7 @@ The panels of the other pair are between them.
 
 The user selects the option with the **Left** and **Right** arrow keys, the same way the user selects a connector in ocl-joints.
 
-**[Proposed]**
+Rules for the selection:
 
 - The tool shows the joint lines of the current option and marks the front side on the candidate.
 - **Enter** or a left click accepts the option.
@@ -217,7 +212,7 @@ Each panel instance gets:
 - The material of the initial group.
 - The tag of the initial group.
 
-**[Proposed]**
+Details:
 
 - The geometry in a panel definition has no material and no tag (Untagged). Thus it shows the instance material,
   and the texture follows the panel axes.
@@ -237,9 +232,9 @@ The plugin makes these objects:
 | RS-4 | The new group replaces the initial group. The initial group is erased. |
 | RS-5 | A new scene. In this scene, only the `<name>` tag folder (with its tags) and the tag of the initial group are visible. All other tags are hidden. |
 
-**[Proposed]**
+Details:
 
-- The new group has the instance name `<name>-body` (Entity Info > Instance). It is in the parent of the initial group. Its axes are the unit frame of section 3.4.
+- The new group has the instance name `<name>-body` (Entity Info > Instance). It is in the model root, the same as the initial group.
 - The new scene has the name `<name>` and becomes the active scene. It keeps the current camera.
 
 Result:
@@ -268,10 +263,10 @@ The panel definition names are new. The older projects use `<unit>-<role>` (exam
 
 ## 6. Technical constraints
 
-- **[Proposed]** Minimum version: SketchUp 2021, because tag folders start in this version. The test version is SketchUp 2026.
-- **[Proposed]** The repository has the same layout as ocl-joints: `src/`, `test/`, `tools/build_rbz.py`, `tools/dev_loader.rb`,
+- Minimum version: SketchUp 2021, because tag folders start in this version. The test version is SketchUp 2026.
+- The repository has the same layout as ocl-joints: `src/`, `test/`, `tools/build_rbz.py`, `tools/dev_loader.rb`,
   and the menu item **Reload extension (dev)**.
-- **[Proposed]** The geometry calculations are in code that does not need SketchUp, so that tests can run without it.
+- The geometry calculations are in code that does not need SketchUp, so that tests can run without it.
 
 ## 7. Open questions
 
