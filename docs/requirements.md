@@ -5,7 +5,7 @@ Status: draft. The concept can change during development.
 Marks in this document:
 
 - **[Proposed]**: the user did not specify this item. It is a proposed default. Change it if it is not correct.
-- **[Q3]**, ...: an open question. See [Open questions](#7-open-questions).
+- **[Q4]**: an open question. See [Open questions](#7-open-questions).
 
 ## 1. Purpose
 
@@ -83,15 +83,31 @@ Name rules:
 
 | ID | Rule |
 |---|---|
-| NM-1 | No tag and no tag folder in the model has a name that starts with `<name>`. |
+| NM-1 | `<name>` is not in conflict with a name of a tag, tag folder, component definition or scene in the model. Two names are in conflict if they are the same, or if one name starts with the other name plus `-`. |
 | NM-2 | **[Proposed]** The name is not empty. Spaces at the start and at the end are removed. |
-| NM-3 | **[Proposed]** The comparison in NM-1 ignores uppercase and lowercase. |
+| NM-3 | The comparison in NM-1 ignores uppercase and lowercase. |
 | NM-4 | **[Proposed]** The name does not start with `f_` or `g_`. ocl-joints and ocl-viyar use these prefixes for machining components, not for panels. |
-| NM-5 | **[Proposed]** No component definition has one of the four panel names of section 3.6. |
 
 If the name is not valid, the plugin shows the reason and asks again.
 
-Example for NM-1: if the tag `an-lcab-body` exists, the names `an`, `an-lcab` and `an-lcab-body` are not valid.
+The reason for NM-1: all names of a unit are `<name>` or start with `<name>-`. These are the tag folder and the scene `<name>`,
+the tags `<name>-<role>` and the components `<name>-<role>-<panel>`. If NM-1 is true, no other unit can have these names.
+Later buttons can add tags such as `<name>-front` with no new name check.
+
+Examples for NM-1:
+
+| Exists in the model | New name | Valid? | Reason |
+|---|---|---|---|
+| Tag `cab1-body` | `cab1` | No | The unit would make the same tag |
+| Tag folder `cab1`, tag `cab1-body` | `cab1-front` | No | Button 2 of `cab1` will make the tag `cab1-front` |
+| Tag `cab10-body` | `cab1` | Yes | `cab1-body` is a different name |
+| Tag `cab1-body` | `cab10` | Yes | `cab10-body` is a different name |
+| Tag `body 18 white` | `body` | Yes | The name after `body` does not start with `-` |
+
+A later button can find a tag with its name that the user added by hand after the unit was made. Example: `cab1-front`.
+
+- If this tag is in the tag folder of the unit, the button uses it.
+- If this tag is not in the tag folder of the unit, the button stops and shows a message.
 
 ### 3.4 Front side and unit frame
 
@@ -264,11 +280,7 @@ Closed questions:
 
 - Q1 (right panel origin): the origin is the bottom right corner. See section 3.7.
 - Q2 (blind pocket): not a valid candidate. See section 3.1.
-
-### Q3. Direction of name rule NM-1
-
-NM-1 checks only that existing names do not start with the new name. Thus the name `an-lcab2` is valid if the tag folder `an-lcab` exists.
-Is this correct?
+- Q3 (name rule): a conflict is a same name, or a name that starts with the other name plus `-`. See section 3.3.
 
 ### Q4. Buttons 2 to 5
 
