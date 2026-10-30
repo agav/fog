@@ -76,7 +76,7 @@ A later version can combine buttons.
 
 The user gives the name `<name>`.
 
-**[Proposed]** The plugin shows an input field. The field contains the instance name of the initial group, if it has one.
+**[Proposed]** The plugin shows an input field. The field contains the instance name of the initial group (Entity Info > Instance), if it has one.
 Thus the user can write the name in Entity Info before the operation and only push **Enter** in the field.
 
 Name rules:
@@ -240,7 +240,7 @@ The plugin makes these objects:
 
 **[Proposed]**
 
-- The new group has the name `<name>-body`. It is in the parent of the initial group. Its axes are the unit frame of section 3.4.
+- The new group has the instance name `<name>-body` (Entity Info > Instance). It is in the parent of the initial group. Its axes are the unit frame of section 3.4.
 - The new scene has the name `<name>` and becomes the active scene. It keeps the current camera.
 
 Result:
